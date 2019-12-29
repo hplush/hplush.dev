@@ -4,7 +4,7 @@
     "start": "parcel serve src/index.pug --open"
   },
   "license": "MIT",
-  "repository": "hplushlab/hplu.sh",
+  "repository": "hplush/hplu.sh",
   "dependencies": {
     "parcel-bundler": "^1.12.4",
     "pug": "^2.0.4",
