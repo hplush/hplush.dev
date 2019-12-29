@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "parcel serve src/index.pug --open"
+    "lint": "stylelint src/**/*.sss",
+    "start": "parcel serve src/index.pug --open",
+    "test": "yarn lint"
   },
   "license": "MIT",
   "repository": "hplush/hplu.sh",
