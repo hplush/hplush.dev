@@ -6,4 +6,25 @@ html( lang="en" )
     meta( name="viewport" content="width=device-width" )
     link( rel="stylesheet" href="/index.sss" )
   body
-    h1 h+h lab
+    .layout
+      .about
+        img( src="./about/logo.svg" )
+        h1 #[strong h+h] lab
+        p How to make Internet better place?
+      .list.is-projects
+        h2 Projects
+      .list
+        h2 Links
+        ul
+          li
+            a( href="https://twitter.com/hplushlab/" rel="me" )
+              h3 News
+              span twitter.com/#[strong hplushlab]
+          li
+            a( href="https://github.com/hplush/" rel="me" )
+              h3 Code
+              span github.com/#[strong hplush]
+          li
+            a( href="mailto:andrey@sitnik.ru" rel="me" )
+              h3 Contact
+              span #[strong andrey@sitnik.ru]
