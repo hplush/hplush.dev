@@ -3,6 +3,19 @@
   "repository": "hplushlab/hplu.sh",
   "license": "MIT",
   "devDependencies": {
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
     "svgo": "^1.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.svg": [
+      "svgo",
+      "git add"
+    ]
   }
 }
