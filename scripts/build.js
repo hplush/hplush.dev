@@ -6,21 +6,26 @@ import { promisify } from 'util'
 import combineMedia from 'postcss-combine-media-query'
 import Bundler from 'parcel-bundler'
 import postcss from 'postcss'
+import crypto from 'crypto'
 import zlib from 'zlib'
 import del from 'del'
 
-import { SRC, DIST } from './lib/dirs.js'
+import { ROOT, SRC, DIST } from './lib/dirs.js'
 
 let gzip = promisify(zlib.gzip)
-
-async function cleanBuildDir () {
-  await del(join(DIST, '*'), { dot: true })
-}
 
 function findAssets (bundle) {
   return Array.from(bundle.childBundles).reduce((all, i) => {
     return all.concat(findAssets(i))
   }, [bundle.name])
+}
+
+function sha256 (string) {
+  return crypto.createHash('sha256').update(string, 'utf8').digest('base64')
+}
+
+async function cleanBuildDir () {
+  await del(join(DIST, '*'), { dot: true })
 }
 
 async function buildAssets () {
@@ -38,17 +43,23 @@ async function copyFiles () {
 async function injectCSS (assets) {
   let cssFile = assets.find(i => extname(i) === '.css')
   let htmlFile = assets.find(i => extname(i) === '.html')
-  let [css, html] = await Promise.all([
+  let nginxFile = join(ROOT, 'nginx.conf')
+  let [css, html, nginx] = await Promise.all([
     fs.readFile(cssFile),
-    fs.readFile(htmlFile)
+    fs.readFile(htmlFile),
+    fs.readFile(nginxFile)
   ])
   let compressed = postcss([combineMedia]).process(css).css
   let injected = html.toString().replace(
     /<link rel="stylesheet" href="[^"]+">/,
     `<style>${ compressed }</style>`
   )
+  nginx = nginx.toString().replace(
+    /(style-src 'sha256-)[^']+'/g, `$1${ sha256(compressed) }'`
+  )
   await Promise.all([
     fs.writeFile(htmlFile, injected),
+    fs.writeFile(nginxFile, nginx),
     fs.unlink(cssFile)
   ])
   return injected
