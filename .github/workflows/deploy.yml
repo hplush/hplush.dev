@@ -1,12 +1,12 @@
-name: Test
+name: Deploy
 
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - master
 
 jobs:
-  build:
-    name: Test
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -22,10 +22,12 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
-          key: yarn-all-${{ hashFiles('**/yarn.lock') }}
+          key: yarn-production-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            yarn-all-
-      - name: Install all dependencies
-        run: yarn install
-      - name: Build and test
-        run: yarn test
+            yarn-production-
+      - name: Install build dependencies
+        run: yarn install --production
+      - name: Build static files
+        run: yarn build
+      - name: Build image
+        run: docker build -t hplush .
