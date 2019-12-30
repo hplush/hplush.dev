@@ -1,5 +1,7 @@
 node_modules/
 .github/
+scripts/
+!scripts/deploy/
 src/
 .cache/
 .git/
