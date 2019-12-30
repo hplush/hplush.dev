@@ -12,14 +12,10 @@ html
 
 body
   line-height: 1
-  color: #1f1f1f
-  background: #fffffe
+  color: var(--text)
+  background: var(--background)
   -webkit-tap-highlight-color: rgba(#000, 0)
   overscroll-behavior-y: none
-
-  @media (prefers-color-scheme: dark)
-    color: #bbb
-    background: #16161a
 
 *:focus
   outline: none
@@ -30,9 +26,5 @@ button
     border: 0
 
 ::selection
-  color: #1f1f1f
-  background: #c2e5eb
-
-  @media (prefers-color-scheme: dark)
-    color: #fffffe
-    background: #4e1a1e
+  color: var(--title)
+  background: var(--accent)
