@@ -73,7 +73,7 @@
         "selectorBlackList": [
           "html"
         ],
-        "rootValue": 18
+        "rootValue": 16
       },
       "postcss-media-minmax": {},
       "autoprefixer": {}
