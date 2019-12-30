@@ -6,7 +6,7 @@
     "lint": "eslint . && stylelint src/**/*.sss",
     "build": "NODE_ENV=production ./scripts/build.js",
     "start": "parcel serve src/index.pug --open",
-    "nginx": "podman build -t hplush . && podman run -v ./dist/:/var/www/dist/ --privileged --rm -p 8000:80 -e PORT=80 -it hplush",
+    "nginx": "podman build -f ./scripts/deploy/Dockerfile -t hplush . && podman run -v ./dist/:/var/www/dist/ --privileged --rm -p 8000:80 -e PORT=80 -it hplush",
     "test": "yarn lint && yarn build && size-limit && yarn spell"
   },
   "license": "MIT",

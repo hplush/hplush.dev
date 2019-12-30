@@ -32,4 +32,4 @@ jobs:
       - name: Build static files
         run: yarn build
       - name: Build image
-        run: docker build -t hplush .
+        run: docker build  -f ./scripts/deploy/Dockerfile -t hplush .
