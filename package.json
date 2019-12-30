@@ -5,7 +5,7 @@
     "lint": "eslint . && stylelint src/**/*.sss",
     "build": "NODE_ENV=production ./scripts/build.js",
     "start": "parcel serve src/index.pug --open",
-    "test": "yarn lint && yarn build"
+    "test": "yarn lint && yarn build && size-limit"
   },
   "license": "MIT",
   "repository": "hplush/hplu.sh",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "@logux/eslint-config": "^35.0.3",
     "@logux/stylelint-config": "^0.1.0",
+    "@size-limit/file": "^2.2.4",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-es5": "^1.4.1",
@@ -87,5 +88,15 @@
       "stylelint --fix",
       "git add"
     ]
-  }
+  },
+  "size-limit": [
+    {
+      "path": [
+        "dist/index.html",
+        "dist/*.woff2",
+        "dist/logo.svg"
+      ],
+      "limit": "41 KB"
+    }
+  ]
 }
