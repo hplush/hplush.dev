@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "autoprefixer": "^9.7.3",
+    "del": "^5.1.0",
     "parcel-bundler": "^1.12.4",
     "postcss-combine-media-query": "^1.0.0",
     "postcss-hexrgba": "^2.0.0",
