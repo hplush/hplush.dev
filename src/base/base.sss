@@ -1,16 +1,22 @@
 html
   color-scheme: light dark
   font-family: 'Encode Sans Semi Expanded', sans-serif
-  font-size: 1.4vw
+  font-size: 1.5vw
 
 *
   padding: 0
   margin: 0
 
 body
-  -webkit-tap-highlight-color: rgba(#000, 0)
   line-height: 1
+  color: #1f1f1f
+  background: #fffffe
+  -webkit-tap-highlight-color: rgba(#000, 0)
   overscroll-behavior-y: none
+
+  @media (prefers-color-scheme: dark)
+    color: #fffffe
+    background: #16161a
 
 *:focus
   outline: none
@@ -19,3 +25,11 @@ a[href],
 button
   &::-moz-focus-inner
     border: 0
+
+::selection
+  color: #1f1f1f
+  background: #c2e5eb
+
+  @media (prefers-color-scheme: dark)
+    color: #fffffe
+    background: #4e1a1e
