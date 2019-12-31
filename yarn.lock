@@ -6929,11 +6929,12 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-ssdeploy@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/ssdeploy/-/ssdeploy-0.2.4.tgz#7b2df3436da9f5cd8abe1b6f16b0398ad4223e4f"
-  integrity sha512-mzThBuaB5LvEnl+Wb148Wyoh5tk8TuReI+EqDW8CsRwe7rLDjbqXQL0M8QTtZq4hfZPVBy7lRq4G6ko+KSQgcA==
+ssdeploy@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ssdeploy/-/ssdeploy-0.3.0.tgz#82f25c3bb226124ce529ad718e3e246f81ec88a2"
+  integrity sha512-ZuyGatHjFRuwGp4WlhtaOlO2n6IFIfaNyfV9/SRvToVIXMn20NpenFVQbZpx5gCQyl6/h31qKMs9lHSvdVZ7tQ==
   dependencies:
+    bytes "^3.1.0"
     chalk "^3.0.0"
     dotenv "^8.2.0"
     make-dir "^3.0.0"
