@@ -25,7 +25,7 @@
     "postcss-nested": "^4.2.1",
     "postcss-pxtorem": "^4.0.1",
     "pug": "^2.0.4",
-    "ssdeploy": "^0.3.0",
+    "ssdeploy": "^0.3.1",
     "sugarss": "^2.0.0"
   },
   "browserslist": [
