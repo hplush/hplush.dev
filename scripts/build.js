@@ -43,7 +43,7 @@ async function copyFiles () {
 async function injectCSS (assets) {
   let cssFile = assets.find(i => extname(i) === '.css')
   let htmlFile = assets.find(i => extname(i) === '.html')
-  let nginxFile = join(ROOT, 'scripts', 'deploy', 'nginx.conf')
+  let nginxFile = join(ROOT, 'nginx.conf')
   let [css, html, nginx] = await Promise.all([
     fs.readFile(cssFile),
     fs.readFile(htmlFile),
