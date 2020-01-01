@@ -1,5 +1,5 @@
 doctype html
-html( lang="en" )
+html( lang="en" itemtype="https://schema.org/Person" itemscope )
   head
     meta( charset="utf-8" )
     title h+h lab
@@ -14,8 +14,8 @@ html( lang="en" )
   body
     .layout
       .about
-        img( src="./about/logo.svg" alt="h+h lab logo" )
-        h1 #[strong h+h] lab
+        img( src="./about/logo.svg" itemprop="logo" alt="h+h lab logo" )
+        h1( itemprop="name" ) #[strong h+h] lab
         p How to make Internet better place?
       .list.is-projects
         h2 Projects
@@ -23,14 +23,14 @@ html( lang="en" )
         h2 Links
         ul
           li
-            a( href="https://twitter.com/hplushlab/" rel="me" )
+            a( href="https://twitter.com/hplushlab/" itemprop="sameAs" rel="me" )
               h3 News
               mark twitter.com/hplushlab
           li
-            a( href="https://github.com/hplush/" rel="me" )
+            a( href="https://github.com/hplush/" itemprop="sameAs" rel="me" )
               h3 Code
               mark github.com/hplush
           li
-            a( href="mailto:andrey@sitnik.ru" rel="me" )
+            a( href="mailto:andrey@sitnik.ru" itemprop="email" )
               h3 Contact
               mark andrey@sitnik.ru
