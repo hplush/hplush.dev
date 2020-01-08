@@ -123,7 +123,11 @@
       "hplush",
       "hplushlab",
       "ru",
-      "sitnik"
+      "sitnik",
+      "UI",
+      "i18n",
+      "a11y",
+      "monetization"
     ]
   }
 }
