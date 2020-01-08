@@ -103,7 +103,8 @@
     "*.sss": [
       "stylelint --fix",
       "git add"
-    ]
+    ],
+    "*.md": "yaspeller"
   },
   "size-limit": [
     {
