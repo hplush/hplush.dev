@@ -6,7 +6,7 @@ Our goal is to help people **listen to each other**.
 
 **Community will not just work.** We need to create an environment where people will listen to each other.
 
-On the other hand, we should not blame users for the tragedy of the community. **There is no bad persons, only bad environment.**
+On the other hand, we should not blame users for the tragedy of the community. There is no bad persons, only bad environment.
 
 
 ## We are protecting users from ourselves
