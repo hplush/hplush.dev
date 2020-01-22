@@ -96,10 +96,7 @@
     }
   },
   "lint-staged": {
-    "*.svg": [
-      "svgo",
-      "git add"
-    ],
+    "*.svg": "svgo",
     "*.sss": "stylelint --fix",
     "*.md": "yaspeller"
   },
