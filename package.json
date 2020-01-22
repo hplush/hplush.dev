@@ -24,7 +24,7 @@
     "postcss-nested": "^4.2.1",
     "postcss-pxtorem": "^4.0.1",
     "pug": "^2.0.4",
-    "ssdeploy": "^0.5.1",
+    "ssdeploy": "^0.6.10",
     "sugarss": "^2.0.0"
   },
   "browserslist": [
@@ -53,8 +53,8 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^15.0.1",
-    "husky": "^4.0.9",
-    "lint-staged": "^9.5.0",
+    "husky": "^4.2.0",
+    "lint-staged": "^10.0.2",
     "stylelint": "^13.0.0",
     "stylelint-config-recess-order": "^2.0.3",
     "stylelint-config-standard": "^19.0.0",
