@@ -12,7 +12,7 @@
   "repository": "hplush/hplu.sh",
   "type": "module",
   "engines": {
-    "node": ">=13.2.0"
+    "node": ">=14.0.0"
   },
   "dependencies": {
     "autoprefixer": "^9.7.4",
