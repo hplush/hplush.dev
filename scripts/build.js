@@ -15,9 +15,12 @@ import { ROOT, SRC, DIST } from './lib/dirs.js'
 let gzip = promisify(zlib.gzip)
 
 function findAssets (bundle) {
-  return Array.from(bundle.childBundles).reduce((all, i) => {
-    return all.concat(findAssets(i))
-  }, [bundle.name])
+  return Array.from(bundle.childBundles).reduce(
+    (all, i) => {
+      return all.concat(findAssets(i))
+    },
+    [bundle.name]
+  )
 }
 
 function sha256 (string) {
@@ -50,13 +53,15 @@ async function injectCSS (assets) {
     fs.readFile(nginxFile)
   ])
   let compressed = postcss([combineMedia]).process(css).css
-  let injected = html.toString().replace(
-    /<link rel="stylesheet" href="[^"]+">/,
-    `<style>${ compressed }</style>`
-  )
-  nginx = nginx.toString().replace(
-    /(style-src 'sha256-)[^']+'/g, `$1${ sha256(compressed) }'`
-  )
+  let injected = html
+    .toString()
+    .replace(
+      /<link rel="stylesheet" href="[^"]+">/,
+      `<style>${compressed}</style>`
+    )
+  nginx = nginx
+    .toString()
+    .replace(/(style-src 'sha256-)[^']+'/g, `$1${sha256(compressed)}'`)
   await Promise.all([
     fs.writeFile(htmlFile, injected),
     fs.writeFile(nginxFile, nginx),
@@ -67,30 +72,28 @@ async function injectCSS (assets) {
 
 async function compressAssets (assets, html) {
   let uncompressable = { '.png': true, '.woff2': true }
-  await Promise.all(assets
-    .concat([join(DIST, 'favicon.ico')])
-    .filter(i => !uncompressable[extname(i)])
-    .filter(i => existsSync(i))
-    .map(async path => {
-      let file
-      if (extname(path) === '.html') {
-        file = html
-      } else {
-        file = await fs.readFile(path)
-      }
-      let compressed = await gzip(file, { level: 9 })
-      await fs.writeFile(path + '.gz', compressed)
-    })
+  await Promise.all(
+    assets
+      .concat([join(DIST, 'favicon.ico')])
+      .filter(i => !uncompressable[extname(i)])
+      .filter(i => existsSync(i))
+      .map(async path => {
+        let file
+        if (extname(path) === '.html') {
+          file = html
+        } else {
+          file = await fs.readFile(path)
+        }
+        let compressed = await gzip(file, { level: 9 })
+        await fs.writeFile(path + '.gz', compressed)
+      })
   )
 }
 
 async function build () {
   await cleanBuildDir()
   let assets = await buildAssets()
-  let [html] = await Promise.all([
-    injectCSS(assets),
-    copyFiles()
-  ])
+  let [html] = await Promise.all([injectCSS(assets), copyFiles()])
   await compressAssets(assets, html)
 }
 
