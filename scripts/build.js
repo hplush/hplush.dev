@@ -1,11 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S node --experimental-json-modules
 
-import { existsSync, promises as fs } from 'fs'
+import { promises as fs } from 'fs'
 import { extname, join } from 'path'
 import { promisify } from 'util'
-import combineMedia from 'postcss-combine-media-query'
-import Bundler from 'parcel-bundler'
-import postcss from 'postcss'
+import ParcelCore from '@parcel/core'
 import crypto from 'crypto'
 import zlib from 'zlib'
 import del from 'del'
@@ -13,15 +11,7 @@ import del from 'del'
 import { ROOT, SRC, DIST } from './lib/dirs.js'
 
 let gzip = promisify(zlib.gzip)
-
-function findAssets (bundle) {
-  return Array.from(bundle.childBundles).reduce(
-    (all, i) => {
-      return all.concat(findAssets(i))
-    },
-    [bundle.name]
-  )
-}
+let Parcel = ParcelCore.default
 
 function sha256 (string) {
   return crypto.createHash('sha256').update(string, 'utf8').digest('base64')
@@ -32,9 +22,14 @@ async function cleanBuildDir () {
 }
 
 async function buildAssets () {
-  let bundler = new Bundler(join(SRC, 'index.pug'), { sourceMaps: false })
-  let bundle = await bundler.bundle()
-  return findAssets(bundle)
+  let bundler = new Parcel({
+    entries: join(SRC, 'index.pug'),
+    defaultConfig: join(ROOT, 'node_modules', '@parcel', 'config-default'),
+    patchConsole: false,
+    sourceMaps: false,
+    minify: true
+  })
+  await bundler.run()
 }
 
 async function copyFiles () {
@@ -43,47 +38,30 @@ async function copyFiles () {
   ])
 }
 
-async function injectCSS (assets) {
-  let cssFile = assets.find(i => extname(i) === '.css')
-  let htmlFile = assets.find(i => extname(i) === '.html')
+async function updateCSP () {
+  let htmlFile = join(DIST, 'index.html')
   let nginxFile = join(ROOT, 'nginx.conf')
-  let [css, html, nginx] = await Promise.all([
-    fs.readFile(cssFile),
+  let [html, nginx] = await Promise.all([
     fs.readFile(htmlFile),
     fs.readFile(nginxFile)
   ])
-  let compressed = postcss([combineMedia]).process(css).css
-  let injected = html
-    .toString()
-    .replace(
-      /<link rel="stylesheet" href="[^"]+">/,
-      `<style>${compressed}</style>`
-    )
+  let css = html.toString().match(/<style>([\W\w]*)<\/style>/m)[1]
   nginx = nginx
     .toString()
-    .replace(/(style-src 'sha256-)[^']+'/g, `$1${sha256(compressed)}'`)
-  await Promise.all([
-    fs.writeFile(htmlFile, injected),
-    fs.writeFile(nginxFile, nginx),
-    fs.unlink(cssFile)
-  ])
-  return injected
+    .replace(/(style-src 'sha256-)[^']+'/g, `$1${sha256(css)}'`)
+  await fs.writeFile(nginxFile, nginx)
 }
 
-async function compressAssets (assets, html) {
+async function compressAssets () {
   let uncompressable = { '.png': true, '.woff2': true }
+  let files = await fs.readdir(DIST)
   await Promise.all(
-    assets
+    files
+      .map(i => join(DIST, i))
       .concat([join(DIST, 'favicon.ico')])
       .filter(i => !uncompressable[extname(i)])
-      .filter(i => existsSync(i))
       .map(async path => {
-        let file
-        if (extname(path) === '.html') {
-          file = html
-        } else {
-          file = await fs.readFile(path)
-        }
+        let file = await fs.readFile(path)
         let compressed = await gzip(file, { level: 9 })
         await fs.writeFile(path + '.gz', compressed)
       })
@@ -92,9 +70,9 @@ async function compressAssets (assets, html) {
 
 async function build () {
   await cleanBuildDir()
-  let assets = await buildAssets()
-  let [html] = await Promise.all([injectCSS(assets), copyFiles()])
-  await compressAssets(assets, html)
+  await buildAssets()
+  await Promise.all([updateCSP(), copyFiles()])
+  await compressAssets()
 }
 
 build().catch(e => {
