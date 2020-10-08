@@ -4,7 +4,7 @@
     "clean": "del-cli dist/ .cache",
     "spell": "yaspeller *.md dist/**/*.html",
     "lint": "eslint . && stylelint src/**/*.sss",
-    "build": "NODE_ENV=production ./scripts/build.js",
+    "build": "NODE_ENV=production node --experimental-json-modules ./scripts/build.js",
     "start": "parcel serve src/index.pug --open",
     "test": "yarn lint && yarn build && size-limit && yarn spell"
   },

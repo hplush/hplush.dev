@@ -1,4 +1,4 @@
-#!/usr/bin/env -S node --experimental-json-modules
+#!/usr/bin/env node
 
 import { promises as fs } from 'fs'
 import { extname, join } from 'path'
