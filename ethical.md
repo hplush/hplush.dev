@@ -1,13 +1,4 @@
-# H+H Principles
-
-## The goal
-
-Our goal is to help people **listen to each other**.
-
-**Community will not just work.** We need to create an environment where people will listen to each other.
-
-On the other hand, we should not blame users for the tragedy of the community. There is no bad persons, only bad environment.
-
+# H+H Ethical Standard
 
 ## We are protecting users from ourselves
 
@@ -41,10 +32,3 @@ For every project, we need to create a **document with all security risks** and 
 * All code should by **open-sources by default**. We should have good reasons if we need to close any component.
 * We should **document all protocols** used in an application.
 * **We are making mistakes.** We should not be afraid of uncomfortable questions and even promote discussions about our problems. On the other hand, we should not blame anyone from the team for mistakes.
-
-
-## Balance between short and long-term
-
-* **We should be realistic.** We should respect current standards, trends, and popular platforms.
-* **We should prefer natural growth** since it will allow us to have simple monetization models.
-* **We should think about future.** How will our data be accessible after ten years?
