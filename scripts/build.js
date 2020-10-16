@@ -27,7 +27,7 @@ async function buildAssets () {
     defaultConfig: join(ROOT, 'node_modules', '@parcel', 'config-default'),
     patchConsole: false,
     sourceMaps: false,
-    minify: true
+    mode: 'production'
   })
   await bundler.run()
 }
