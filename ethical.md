@@ -9,7 +9,7 @@ For every project, we need to create a **document with all security risks** and 
 * **Trolls.** How people can use community rules in destructive form.
 
 
-## Users first
+## Users-first
 
 * **Users own their data.** They should understand if we use their data for anything. Our architecture should allow them to remove their data or download it.
 * We should prefer **[local-first](https://www.inkandswitch.com/local-first.html) architecture** where it is possible.
