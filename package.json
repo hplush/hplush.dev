@@ -15,7 +15,7 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "autoprefixer": "^10.0.2",
+    "autoprefixer": "^10.0.4",
     "del": "^6.0.0",
     "parcel": "nightly",
     "postcss": "^8.1.10",
