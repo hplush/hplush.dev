@@ -23,7 +23,7 @@
     "postcss-media-minmax": "^4.0.0",
     "postcss-nested": "^5.0.3",
     "postcss-pxtorem": "^5.1.1",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "ssdeploy": "^0.6.19",
     "sugarss": "^3.0.3"
   },
