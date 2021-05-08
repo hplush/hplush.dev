@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "clean": "del-cli dist/ .cache",
+    "clean": "rm -Rf dist/ .parcel-cache/",
     "spell": "yaspeller *.md dist/**/*.html",
     "lint": "eslint . && stylelint src/**/*.sss",
     "build": "NODE_ENV=production node --experimental-json-modules ./scripts/build.js",
@@ -31,7 +31,6 @@
     "@logux/eslint-config": "^42.3.0",
     "@logux/stylelint-config": "^0.1.4",
     "@size-limit/file": "^4.9.1",
-    "del-cli": "^3.0.1",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-es5": "^1.5.0",
