@@ -42,8 +42,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-unicorn": "^23.0.0",
-    "husky": "^4.3.5",
-    "lint-staged": "^10.5.3",
+    "lint-staged": "^11.0.0",
+    "simple-git-hooks": "^2.4.1",
     "size-limit": "^4.10.2",
     "stylelint": "^13.13.1",
     "svgo": "^2.3.0",
@@ -88,10 +88,8 @@
   "stylelint": {
     "extends": "@logux/stylelint-config"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.svg": "svgo",
