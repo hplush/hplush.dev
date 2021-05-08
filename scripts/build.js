@@ -13,15 +13,15 @@ import { ROOT, SRC, DIST } from './lib/dirs.js'
 let gzip = promisify(zlib.gzip)
 let Parcel = ParcelCore.default
 
-function sha256 (string) {
+function sha256(string) {
   return crypto.createHash('sha256').update(string, 'utf8').digest('base64')
 }
 
-async function cleanBuildDir () {
+async function cleanBuildDir() {
   await del(join(DIST, '*'), { dot: true })
 }
 
-async function buildAssets () {
+async function buildAssets() {
   let bundler = new Parcel({
     entries: join(SRC, 'index.pug'),
     defaultConfig: join(ROOT, 'node_modules', '@parcel', 'config-default'),
@@ -32,13 +32,13 @@ async function buildAssets () {
   await bundler.run()
 }
 
-async function copyFiles () {
+async function copyFiles() {
   await Promise.all([
     fs.copyFile(join(SRC, 'base', 'favicon.ico'), join(DIST, 'favicon.ico'))
   ])
 }
 
-async function updateCSP () {
+async function updateCSP() {
   let htmlFile = join(DIST, 'index.html')
   let nginxFile = join(ROOT, 'nginx.conf')
   let [html, nginx] = await Promise.all([
@@ -52,7 +52,7 @@ async function updateCSP () {
   await fs.writeFile(nginxFile, nginx)
 }
 
-async function compressAssets () {
+async function compressAssets() {
   let uncompressable = { '.png': true, '.woff2': true }
   let files = await fs.readdir(DIST)
   await Promise.all(
@@ -68,7 +68,7 @@ async function compressAssets () {
   )
 }
 
-async function build () {
+async function build() {
   await cleanBuildDir()
   await buildAssets()
   await Promise.all([updateCSP(), copyFiles()])

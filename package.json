@@ -28,21 +28,21 @@
     "sugarss": "^3.0.3"
   },
   "devDependencies": {
-    "@logux/eslint-config": "^42.3.0",
+    "@logux/eslint-config": "^45.4.1",
     "@logux/stylelint-config": "^0.3.1",
     "@size-limit/file": "^4.10.2",
-    "eslint": "^7.15.0",
+    "eslint": "^7.26.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-es5": "^1.5.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prefer-let": "^1.1.0",
-    "eslint-plugin-prettierx": "^0.14.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-unicorn": "^23.0.0",
+    "eslint-plugin-unicorn": "^31.0.0",
     "lint-staged": "^11.0.0",
+    "prettier": "^2.2.1",
     "simple-git-hooks": "^2.4.1",
     "size-limit": "^4.10.2",
     "stylelint": "^13.13.1",
@@ -81,7 +81,6 @@
     "extends": "@logux/eslint-config"
   },
   "eslintIgnore": [
-    "scripts/lib/dirs.js",
     "dist",
     ".cache"
   ],
@@ -89,12 +88,24 @@
     "extends": "@logux/stylelint-config"
   },
   "simple-git-hooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*.svg": "svgo",
     "*.sss": "stylelint --fix",
-    "*.md": "yaspeller"
+    "*.md": "yaspeller",
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "jsxSingleQuote": false,
+    "quoteProps": "consistent",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "size-limit": [
     {
@@ -103,7 +114,7 @@
         "dist/*.woff2",
         "dist/logo.svg"
       ],
-      "limit": "41 KB"
+      "limit": "42 KB"
     }
   ],
   "yaspeller": {
