@@ -15,6 +15,17 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.14.0",
+    "@parcel/optimizer-cssnano": "^2.0.0-nightly.643",
+    "@parcel/optimizer-htmlnano": "^2.0.0-nightly.643",
+    "@parcel/packager-css": "^2.0.0-nightly.643",
+    "@parcel/packager-html": "^2.0.0-nightly.643",
+    "@parcel/transformer-css": "^2.0.0-nightly.643",
+    "@parcel/transformer-html": "^2.0.0-nightly.643",
+    "@parcel/transformer-postcss": "^2.0.0-nightly.643",
+    "@parcel/transformer-posthtml": "^2.0.0-nightly.643",
+    "@parcel/transformer-pug": "^2.0.0-nightly.643",
+    "@parcel/transformer-sugarss": "^2.0.0-nightly.643",
     "autoprefixer": "^10.2.5",
     "del": "^6.0.0",
     "parcel": "^2.0.0-nightly.463",
