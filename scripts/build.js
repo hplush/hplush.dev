@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { promises as fs } from 'fs'
+import { readFile, writeFile, readdir, copyFile } from 'fs/promises'
 import { extname, join } from 'path'
 import { promisify } from 'util'
 import ParcelCore from '@parcel/core'
@@ -34,7 +34,7 @@ async function buildAssets() {
 
 async function copyFiles() {
   await Promise.all([
-    fs.copyFile(join(SRC, 'base', 'favicon.ico'), join(DIST, 'favicon.ico'))
+    copyFile(join(SRC, 'base', 'favicon.ico'), join(DIST, 'favicon.ico'))
   ])
 }
 
@@ -42,28 +42,28 @@ async function updateCSP() {
   let htmlFile = join(DIST, 'index.html')
   let nginxFile = join(ROOT, 'nginx.conf')
   let [html, nginx] = await Promise.all([
-    fs.readFile(htmlFile),
-    fs.readFile(nginxFile)
+    readFile(htmlFile),
+    readFile(nginxFile)
   ])
   let css = html.toString().match(/<style>([\W\w]*)<\/style>/m)[1]
   nginx = nginx
     .toString()
     .replace(/(style-src 'sha256-)[^']+'/g, `$1${sha256(css)}'`)
-  await fs.writeFile(nginxFile, nginx)
+  await writeFile(nginxFile, nginx)
 }
 
 async function compressAssets() {
   let uncompressable = { '.png': true, '.woff2': true }
-  let files = await fs.readdir(DIST)
+  let files = await readdir(DIST)
   await Promise.all(
     files
       .map(i => join(DIST, i))
       .concat([join(DIST, 'favicon.ico')])
       .filter(i => !uncompressable[extname(i)])
       .map(async path => {
-        let file = await fs.readFile(path)
+        let file = await readFile(path)
         let compressed = await gzip(file, { level: 9 })
-        await fs.writeFile(path + '.gz', compressed)
+        await writeFile(path + '.gz', compressed)
       })
   )
 }
