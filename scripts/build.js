@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
-import { readFile, writeFile, readdir, copyFile } from 'fs/promises'
+import { readFile, writeFile, readdir, copyFile, rm, mkdir } from 'fs/promises'
 import { extname, join } from 'path'
+import { fileURLToPath } from 'url'
 import { promisify } from 'util'
 import ParcelCore from '@parcel/core'
 import crypto from 'crypto'
 import zlib from 'zlib'
-import del from 'del'
 
-import { ROOT, SRC, DIST } from './lib/dirs.js'
+const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
+const DIST = join(ROOT, 'dist')
+const SRC = join(ROOT, 'src')
 
 let gzip = promisify(zlib.gzip)
 let Parcel = ParcelCore.default
@@ -18,16 +20,19 @@ function sha256(string) {
 }
 
 async function cleanBuildDir() {
-  await del(join(DIST, '*'), { dot: true })
+  await rm(DIST, { recursive: true, force: true })
+  await mkdir(DIST)
 }
 
 async function buildAssets() {
   let bundler = new Parcel({
     entries: join(SRC, 'index.pug'),
+    shouldPatchConsole: false,
     defaultConfig: join(ROOT, 'node_modules', '@parcel', 'config-default'),
-    patchConsole: false,
-    sourceMaps: false,
-    mode: 'production'
+    mode: 'production',
+    defaultTargetOptions: {
+      sourceMaps: false
+    }
   })
   await bundler.run()
 }
@@ -76,6 +81,10 @@ async function build() {
 }
 
 build().catch(e => {
-  process.stderr.write(e.stack + '\n')
+  if (typeof e === 'string') {
+    process.stderr.write(e + '\n')
+  } else {
+    process.stderr.write(e.stack + '\n')
+  }
   process.exit(1)
 })
