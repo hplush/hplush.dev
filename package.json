@@ -1,9 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "spell": "yaspeller *.md dist/*.html",
     "start": "serve dist/",
-    "test": "size-limit && yarn spell"
+    "test": "yaspeller *.md dist/*.html"
   },
   "license": "MIT",
   "repository": "hplush/hplu.sh",
@@ -15,21 +14,9 @@
     "ssdeploy": "^0.6.21"
   },
   "devDependencies": {
-    "@size-limit/file": "^4.12.0",
     "serve": "^12.0.0",
-    "size-limit": "^4.12.0",
     "yaspeller": "^7.0.0"
   },
-  "size-limit": [
-    {
-      "path": [
-        "dist/index.html",
-        "dist/*.woff2",
-        "dist/logo.svg"
-      ],
-      "limit": "43 KB"
-    }
-  ],
   "yaspeller": {
     "ignoreCapitalization": true,
     "dictionary": [
