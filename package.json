@@ -1,12 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "clean": "rm -Rf dist/ .parcel-cache/",
-    "spell": "yaspeller *.md dist/**/*.html",
-    "lint": "eslint . && stylelint src/**/*.sss",
-    "build": "NODE_ENV=production node --experimental-json-modules ./scripts/build.js",
-    "start": "parcel serve src/index.pug --open",
-    "test": "yarn lint && yarn build && size-limit && yarn spell"
+    "spell": "yaspeller *.md public/*.html",
+    "start": "serve public/",
+    "test": "size-limit && yarn spell"
   },
   "license": "MIT",
   "repository": "hplush/hplu.sh",
@@ -15,99 +12,28 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.14.6",
-    "@parcel/optimizer-cssnano": "2.0.0-beta.2",
-    "@parcel/optimizer-htmlnano": "2.0.0-beta.2",
-    "@parcel/packager-css": "2.0.0-beta.2",
-    "@parcel/packager-html": "2.0.0-beta.2",
-    "@parcel/transformer-css": "2.0.0-beta.2",
-    "@parcel/transformer-html": "2.0.0-beta.2",
-    "@parcel/transformer-postcss": "2.0.0-beta.2",
-    "@parcel/transformer-posthtml": "2.0.0-beta.2",
-    "@parcel/transformer-pug": "2.0.0-beta.2",
-    "@parcel/transformer-sugarss": "2.0.0-beta.2",
-    "autoprefixer": "^10.2.6",
-    "parcel": "^2.0.0-beta.2",
-    "postcss": "^8.3.4",
-    "postcss-hexrgba": "^2.0.1",
-    "postcss-media-minmax": "^5.0.0",
-    "postcss-nested": "^5.0.5",
-    "postcss-pxtorem": "^6.0.0",
-    "pug": "^3.0.2",
-    "ssdeploy": "^0.6.21",
-    "sugarss": "^4.0.1"
+    "ssdeploy": "^0.6.21"
   },
   "devDependencies": {
-    "@logux/eslint-config": "^45.4.4",
-    "@logux/stylelint-config": "^0.3.1",
     "@size-limit/file": "^4.12.0",
-    "eslint": "^7.28.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-es5": "^1.5.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prefer-let": "^1.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-unicorn": "^33.0.1",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.1",
+    "serve": "^12.0.0",
     "simple-git-hooks": "^2.4.1",
     "size-limit": "^4.12.0",
-    "stylelint": "^13.13.1",
     "svgo": "^2.3.0",
     "yaspeller": "^7.0.0"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "firefox esr",
-    "not dead",
-    "not ie 11",
-    "not ie_mob 11",
-    "not op_mini all",
-    "not op_mob > 0",
-    "not and_qq > 0",
-    "not android > 0"
-  ],
-  "postcss": {
-    "plugins": {
-      "postcss-nested": {},
-      "postcss-hexrgba": {},
-      "postcss-pxtorem": {
-        "propList": [
-          "*"
-        ],
-        "selectorBlackList": [
-          "html"
-        ],
-        "rootValue": 16
-      },
-      "postcss-media-minmax": {},
-      "autoprefixer": {}
-    }
-  },
-  "eslintConfig": {
-    "extends": "@logux/eslint-config"
-  },
-  "eslintIgnore": [
-    "dist",
-    ".cache"
-  ],
-  "stylelint": {
-    "extends": "@logux/stylelint-config"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*.svg": "svgo",
-    "*.sss": "stylelint --fix",
-    "*.md": "yaspeller",
-    "*.js": [
+    "*.html": [
       "prettier --write",
-      "eslint --fix"
-    ]
+      "yaspeller"
+    ],
+    "*.md": "yaspeller"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -120,11 +46,11 @@
   "size-limit": [
     {
       "path": [
-        "dist/index.html",
-        "dist/*.woff2",
-        "dist/logo.svg"
+        "public/index.html",
+        "public/*.woff2",
+        "public/logo.svg"
       ],
-      "limit": "42 KB"
+      "limit": "43 KB"
     }
   ],
   "yaspeller": {

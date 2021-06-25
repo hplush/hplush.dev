@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" itemtype="https://schema.org/Person" itemscope>
+  <head>
+    <meta charset="utf-8" />
+    <title>h+h lab</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/32.png" sizes="32x32" />
+    <link rel="icon" href="/196.png" sizes="196x196" />
+    <link rel="apple-touch-icon" href="/apple.png" />
+    <meta name="description" content="How to make Internet better place?" />
+    <style>
+      @font-face {
+        font-family: Encode Sans Semi Expanded;
+        font-display: swap;
+        src: url(./regular.woff2) format('woff2');
+      }
+
+      @font-face {
+        font-family: Encode Sans Semi Expanded;
+        font-weight: 700;
+        font-display: swap;
+        src: url(bold.dfd940f4.woff2) format('woff2');
+      }
+
+      html {
+        --background: #fffffe;
+        --text: #1f1f1f;
+        --title: #010100;
+        --highlight: #e3f6f5;
+        --accent: #ffd803;
+
+        height: 100%;
+        font-family: Encode Sans Semi Expanded, sans-serif;
+        font-size: 1.5vw;
+        color-scheme: light dark;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #16161a;
+          --text: #bbb;
+          --title: #fffffe;
+          --highlight: #1f1f23;
+          --accent: #7f5af0;
+        }
+      }
+
+      @media (max-width: 999px) {
+        html {
+          font-size: 16px;
+        }
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        height: 100%;
+        overscroll-behavior-y: none;
+        line-height: 1;
+        color: var(--text);
+        background: var(--background);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+
+      :focus {
+        outline: none;
+      }
+
+      a[href]::-moz-focus-inner,
+      button::-moz-focus-inner {
+        border: 0;
+      }
+
+      ::-moz-selection {
+        color: var(--title);
+        background: var(--accent);
+      }
+
+      ::selection {
+        color: var(--title);
+        background: var(--accent);
+      }
+
+      @media (min-width: 1000px) {
+        .layout {
+          display: grid;
+          grid-template: auto/1.5fr 1fr 1fr;
+          height: 100%;
+        }
+      }
+
+      @media (max-width: 999px) {
+        .layout {
+          padding-bottom: 1.5rem;
+        }
+      }
+
+      .about {
+        padding: 1.5rem;
+      }
+
+      .about img {
+        width: 5.25rem;
+        height: 6.615rem;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .about img {
+          filter: invert(1);
+        }
+      }
+
+      .about h1 {
+        padding: 2.25rem 0 1.5rem;
+        font-size: 250%;
+        font-weight: 400;
+        color: var(--title);
+      }
+
+      .about strong {
+        font-weight: 700;
+      }
+
+      .about p {
+        padding-top: 0.75rem;
+        line-height: 1.7;
+      }
+
+      .list.is-projects {
+        background: var(--highlight);
+      }
+
+      .list h2 {
+        padding: 1.125rem 1.5rem;
+        font-size: 100%;
+        font-weight: 400;
+      }
+
+      .list li {
+        list-style: none;
+      }
+
+      .list a {
+        display: block;
+        padding: 1.125rem 1.5rem;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .list a:focus,
+      .list a:hover {
+        background: var(--accent);
+      }
+
+      .list h3 {
+        padding-bottom: 0.5rem;
+        font-size: 100%;
+        color: var(--title);
+      }
+
+      .list mark {
+        color: inherit;
+        background-color: initial;
+        background-image: linear-gradient(var(--accent), var(--accent));
+        background-repeat: no-repeat;
+        background-position: center bottom 7%;
+        background-origin: initial;
+        background-size: 100% 0.375rem;
+      }
+
+      .list div {
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div class="about">
+        <img src="/logo.svg" itemprop="logo" alt="h+h lab logo" />
+        <h1 itemprop="name"><strong>h+h</strong> lab</h1>
+        <p>
+          The lab to create urbanism for the modern Web. We are building tools
+          for users and practices for website authors to make public spaces
+          better.
+        </p>
+      </div>
+      <div class="is-projects list">
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/hplush/hplu.sh/blob/main/ethical.md">
+              <h3><mark>Ethical Standard</mark></h3>
+              <div>Rules to make ethical web services</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="list">
+        <h2>Links</h2>
+        <ul>
+          <li>
+            <a href="https://twitter.com/hplushlab/" itemprop="sameAs" rel="me">
+              <h3>News</h3>
+              <mark>twitter.com/hplushlab</mark>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/hplush/" itemprop="sameAs" rel="me">
+              <h3>Code</h3>
+              <mark>github.com/hplush</mark>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:hi@hplu.sh" itemprop="email">
+              <h3>Contact</h3>
+              <mark>hi@hplu.sh</mark>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
