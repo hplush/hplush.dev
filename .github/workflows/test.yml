@@ -19,6 +19,6 @@ jobs:
         with:
           node-version: 16
       - name: Install all dependencies
-        run: yarn install
+        uses: bahmutov/npm-install@v1
       - name: Build and test
         run: yarn test

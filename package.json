@@ -6,10 +6,6 @@
   },
   "license": "MIT",
   "repository": "hplush/hplu.sh",
-  "type": "module",
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "dependencies": {
     "ssdeploy": "^0.6.21"
   },
