@@ -1,13 +1,10 @@
 name: Deploy
-
 on:
   push:
     branches:
       - main
-
 env:
   FORCE_COLOR: 2
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,15 +15,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
+          cache: yarn
       - name: Install build dependencies
-        uses: bahmutov/npm-install@v1
-        env:
-          NODE_ENV: production
+        run: yarn install --frozen-lockfile --production
       - name: Check files changes
         id: hash
         run: npx ssdeploy changed
         env:
           WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+          FORCE_COLOR: 2
       - name: Install Google Cloud
         if: "!steps.hash.outputs.noChanges"
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -40,3 +37,4 @@ jobs:
           GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          FORCE_COLOR: 2
