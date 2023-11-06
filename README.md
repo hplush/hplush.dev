@@ -1,3 +1,3 @@
 # h+h lab website
 
-Online: **[`hplu.sh`](https://hplush.dev)**
+Online: **[`hplush.dev`](https://hplush.dev)**
