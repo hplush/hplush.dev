@@ -1,11 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "start": "serve dist/"
+    "start": "serve dist/",
+    "build": "node ./scripts/compile-md.js principles.md"
   },
+  "type": "module",
   "license": "MIT",
   "repository": "hplush/hplu.sh",
   "dependencies": {
+    "marked": "^11.1.0",
     "ssdeploy": "^0.9.3"
   },
   "devDependencies": {

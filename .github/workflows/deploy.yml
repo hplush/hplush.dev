@@ -20,6 +20,8 @@ jobs:
           cache: pnpm
       - name: Install build dependencies
         run: pnpm install --frozen-lockfile --production
+      - name: Compile Markdown
+        run: pnpm build
       - name: Check files changes
         id: hash
         run: npx ssdeploy changed

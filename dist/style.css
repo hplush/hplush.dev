@@ -59,9 +59,13 @@ body {
 }
 
 main {
-  max-width: 40rem;
-  padding: 2rem 1rem;
+  max-width: 45rem;
+  padding: 2rem 1rem 4rem 1rem;
   margin: 0 auto;
+}
+
+.intro {
+  max-width: 40rem;
 }
 
 .logo {
@@ -84,7 +88,9 @@ h1::before,
 h2::before,
 li::before,
 a::before,
-a::after {
+a::after,
+strong::before,
+strong::after {
   font-weight: normal;
   color: var(--secondary);
 }
@@ -99,6 +105,14 @@ strong {
   font-weight: 800;
 }
 
+:not(h1) > strong::before {
+  content: "**";
+}
+
+:not(h1) > strong::after {
+  content: "**";
+}
+
 h1::before {
   content: "# ";
 }
@@ -107,6 +121,10 @@ h2 {
   margin: 3rem 0 1rem 0;
   font-weight: inherit;
   font-size: 1.5rem;
+
+  h1 + & {
+    margin-top: 0;
+  }
 }
 
 h2::before {
@@ -115,6 +133,10 @@ h2::before {
 
 p + p {
   margin-top: 1rem;
+}
+
+p + ul {
+  padding-top: 1em;
 }
 
 li {
@@ -135,7 +157,7 @@ li::before {
 
 a.edit {
   color: var(--secondary);
-  position: absolute;
+  position: fixed;
   right: 1rem;
   bottom: 1rem;
   font-size: 0.8rem;
@@ -146,6 +168,8 @@ a.edit {
 }
 
 a {
+  --underline: 2px;
+
   color: inherit;
   font-weight: 600;
   padding: 0 1em;
@@ -166,8 +190,8 @@ a {
       transparent,
       transparent 90%,
       var(--secondary) 90%,
-      var(--secondary) calc(90% + 2px),
-      transparent calc(90% + 2px)
+      var(--secondary) calc(90% + var(--underline)),
+      transparent calc(90% + var(--underline))
     );
 
   &:hover,
@@ -181,8 +205,12 @@ a {
     transform: scale(0.95);
   }
 
-  &.is-first {
+  &.first {
     margin-left: -1em;
+  }
+
+  h1 & {
+    --underline: 4px;
   }
 }
 
