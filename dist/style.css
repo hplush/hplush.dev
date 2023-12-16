@@ -23,7 +23,7 @@ html {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #17140f;
+    --background: #312E29;
     --text: #f9f0e7;
     --secondary: #f9f0e755;
     --text-active: #000;
