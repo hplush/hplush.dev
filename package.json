@@ -9,6 +9,6 @@
     "ssdeploy": "^0.9.3"
   },
   "devDependencies": {
-    "serve": "^14.2.0"
+    "serve": "^14.2.1"
   }
 }
