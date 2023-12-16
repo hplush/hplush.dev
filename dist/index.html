@@ -4,65 +4,45 @@
     <meta charset="utf-8" />
     <title>h+h lab</title>
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/32.png" sizes="32x32" />
-    <link rel="icon" href="/196.png" sizes="196x196" />
-    <link rel="apple-touch-icon" href="/apple.png" />
-    <meta name="description" content="How to make Internet better place?" />
+    <link rel="icon" href="./favicon.ico" sizes="32x32" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple.png" />
+    <meta
+      name="description"
+      content="Urbanism for Web: improve human comminations by changing public
+      platforms"
+    />
     <style>
-      @font-face {
-        font-family: Encode Sans Semi Expanded;
-        font-display: swap;
-        src: url(./regular.woff2) format("woff2");
-      }
-
-      @font-face {
-        font-family: Encode Sans Semi Expanded;
-        font-weight: 700;
-        font-display: swap;
-        src: url(bold.dfd940f4.woff2) format("woff2");
-      }
-
-      html {
-        --background: #fffffe;
-        --text: #1f1f1f;
-        --title: #010100;
-        --highlight: #e3f6f5;
-        --accent: #ffd803;
-
-        height: 100%;
-        font-family: Encode Sans Semi Expanded, sans-serif;
-        font-size: 1.5vw;
-        color-scheme: light dark;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --background: #16161a;
-          --text: #bbb;
-          --title: #fffffe;
-          --highlight: #1f1f23;
-          --accent: #7f5af0;
-        }
-      }
-
-      @media (max-width: 999px) {
-        html {
-          font-size: 16px;
-        }
-      }
-
       * {
         padding: 0;
         margin: 0;
       }
 
-      body {
-        height: 100%;
-        overscroll-behavior-y: none;
-        line-height: 1;
-        color: var(--text);
-        background: var(--background);
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      @font-face {
+        font-family: "Martian Mono";
+        font-weight: 100 800;
+        font-stretch: 75% 112.5%;
+        src: url(./martianmono.woff2) format("woff2");
+        font-display: swap;
+      }
+
+      html {
+        --background: #f9f0e7;
+        --text: #312e29;
+        --secondary: #312e2955;
+        --text-active: #fff;
+
+        min-height: 100%;
+        color-scheme: light dark;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #17140f;
+          --text: #f9f0e7;
+          --secondary: #f9f0e755;
+          --text-active: #000;
+        }
       }
 
       :focus {
@@ -75,169 +55,248 @@
       }
 
       ::-moz-selection {
-        color: var(--title);
-        background: var(--accent);
+        color: var(--background);
+        background: var(--text);
       }
 
       ::selection {
-        color: var(--title);
-        background: var(--accent);
+        color: var(--background);
+        background: var(--text);
       }
 
-      @media (min-width: 1000px) {
-        .layout {
-          display: grid;
-          grid-template: auto/1.5fr 1fr 1fr;
-          height: 100%;
-        }
+      body {
+        font-size: 16px;
+        font-family: "Martian Mono", monospace;
+        line-height: 1.8;
+        background: var(--background);
+        color: var(--text);
+        font-weight: 300;
       }
 
-      @media (max-width: 999px) {
-        .layout {
-          padding-bottom: 1.5rem;
-        }
+      main {
+        max-width: 40rem;
+        padding: 2rem 1rem;
+        margin: 0 auto;
       }
 
-      .about {
-        padding: 1.5rem;
+      .logo {
+        float: right;
+        width: 80px;
+        height: 101px;
+        background-color: var(--text);
+        mask-image: url(./logo.svg);
+        mask-size: contain;
+        margin-top: 0.4rem;
       }
 
-      .about img {
-        width: 5.25rem;
-        height: 6.615rem;
+      img {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
       }
 
-      @media (prefers-color-scheme: dark) {
-        .about img {
-          filter: invert(1);
-        }
+      h1::before,
+      h2::before,
+      li::before,
+      a::before,
+      a::after {
+        font-weight: normal;
+        color: var(--secondary);
       }
 
-      .about h1 {
-        padding: 2.25rem 0 1.5rem;
-        font-size: 250%;
-        font-weight: 400;
-        color: var(--title);
+      h1 {
+        font-weight: inherit;
+        font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
-      .about strong {
-        font-weight: 700;
+      strong {
+        font-weight: 800;
       }
 
-      .about p {
-        padding-top: 0.75rem;
-        line-height: 1.7;
+      h1::before {
+        content: "# ";
       }
 
-      .list.is-projects {
-        background: var(--highlight);
+      h2 {
+        margin: 3rem 0 1rem 0;
+        font-weight: inherit;
+        font-size: 1.5rem;
       }
 
-      .list h2 {
-        padding: 1.125rem 1.5rem;
-        font-size: 100%;
-        font-weight: 400;
+      h2::before {
+        content: "## ";
       }
 
-      .list li {
+      p + p {
+        margin-top: 1rem;
+      }
+
+      li {
         list-style: none;
+        padding-left: 2rem;
+        position: relative;
+
+        & + & {
+          padding-top: 1em;
+        }
       }
 
-      .list a {
-        display: block;
-        padding: 1.125rem 1.5rem;
+      li::before {
+        content: "* ";
+        position: absolute;
+        left: 0;
+      }
+
+      a.edit {
+        color: var(--secondary);
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        font-size: 0.8rem;
+
+        @media (width <= 800px) {
+          display: none;
+        }
+      }
+
+      a {
         color: inherit;
+        font-weight: 600;
+        padding: 0 1em;
+        position: relative;
+        display: inline-block;
         text-decoration: none;
+        background-image: linear-gradient(
+            to right,
+            var(--background),
+            var(--background) 1em,
+            transparent 1em,
+            transparent calc(100% - 1em),
+            var(--background) calc(100% - 1em),
+            var(--background)
+          ),
+          linear-gradient(
+            to bottom,
+            transparent,
+            transparent 90%,
+            var(--secondary) 90%,
+            var(--secondary) calc(90% + 2px),
+            transparent calc(90% + 2px)
+          );
+
+        &:hover,
+        &:focus-visible {
+          background: var(--text);
+          color: var(--text-active);
+          border-radius: 0.3rem;
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        &.is-first {
+          margin-left: -1em;
+        }
       }
 
-      .list a:focus,
-      .list a:hover {
-        background: var(--accent);
+      a::before,
+      a::after {
+        width: 1em;
+        position: absolute;
+        text-align: center;
       }
 
-      .list h3 {
-        padding-bottom: 0.5rem;
-        font-size: 100%;
-        color: var(--title);
-      }
-
-      .list mark {
+      a:hover::before,
+      a:focus-visible::before,
+      a:hover::after,
+      a:focus-visible::after {
         color: inherit;
-        background-color: initial;
-        background-image: linear-gradient(var(--accent), var(--accent));
-        background-repeat: no-repeat;
-        background-position: center bottom 7%;
-        background-origin: initial;
-        background-size: 100% 0.375rem;
       }
 
-      .list div {
-        line-height: 1.7;
+      a::before {
+        content: "[";
+        left: 0;
+      }
+
+      a::after {
+        content: "]";
+        right: 0;
       }
     </style>
   </head>
 
   <body>
-    <div class="layout">
-      <div class="about">
-        <img src="/logo.svg" itemprop="logo" alt="h+h lab logo" />
-        <h1 itemprop="name"><strong>h+h</strong> lab</h1>
-        <p>
-          The lab to create urbanism for the modern Web. We are building tools
-          for users and practices for website authors to make public spaces
-          better.
-        </p>
+    <main>
+      <div class="logo">
+        <img src="./logo.svg" itemprop="logo" alt="h+h lab logo" />
       </div>
-      <div class="is-projects list">
-        <h2>Projects</h2>
-        <ul>
-          <li>
-            <a href="https://github.com/hplush/hplush.dev/blob/main/ethical.md">
-              <h3><mark>Ethical Standard</mark></h3>
-              <div>Rules to make ethical web services</div>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="list">
-        <h2>Links</h2>
-        <ul>
-          <li>
-            <a href="https://t.me/hplushlab" itemprop="sameAs" rel="me">
-              <h3>Telegram</h3>
-              <mark>@hplushlab</mark>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://mastodon.social/@hplushlab"
-              itemprop="sameAs"
-              rel="me"
-            >
-              <h3>Mastodon</h3>
-              <mark>@hplushlab@mastodon.social</mark>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/hplushlab/" itemprop="sameAs" rel="me">
-              <h3>Twitter</h3>
-              <mark>@hplushlab</mark>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/hplush/" itemprop="sameAs" rel="me">
-              <h3>Code</h3>
-              <mark>github.com/hplush</mark>
-            </a>
-          </li>
-          <li>
-            <a href="mailto:andrey@sitnik.ru" itemprop="email">
-              <h3>Contact</h3>
-              <mark>andrey@sitnik.ru</mark>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <h1 itemprop="name"><strong>h+h</strong> lab</h1>
+      <p>
+        Urbanism for Web: improve human comminations by changing public
+        platforms.
+      </p>
+      <p>
+        In our lab we are experimenting with new ways to build social networks
+        and new design patterns.
+      </p>
+      <h2>Projects</h2>
+      <ul>
+        <li>
+          <a
+            href="https://github.com/hplush/hplush.dev/blob/main/ethical.md"
+            class="is-first"
+          >
+            h+h principals
+          </a>
+          behind our projects.
+        </li>
+        <li>
+          <a href="https://github.com/hplush/slowreader" class="is-first">
+            Slow Reader
+          </a>
+          combines feeds from social networks and RSS and help read more
+          meaningful and deep content.
+        </li>
+      </ul>
+      <h2>Links</h2>
+      <ul>
+        <li>
+          Telegram:
+          <a href="https://t.me/hplushlab" itemprop="sameAs" rel="me">
+            @hplushlab
+          </a>
+        </li>
+        <li>
+          Mastodon:
+          <a
+            href="https://mastodon.social/@hplushlab"
+            itemprop="sameAs"
+            rel="me"
+          >
+            @hplushlab@mastodon.social
+          </a>
+        </li>
+        <li>
+          Twitter:
+          <a href="https://twitter.com/hplushlab/" itemprop="sameAs" rel="me">
+            @hplushlab
+          </a>
+        </li>
+        <li>
+          Email:
+          <a href="mailto:andrey@sitnik.ru" itemprop="email">
+            andrey@sitnik.ru
+          </a>
+        </li>
+      </ul>
+    </main>
+    <a
+      href="https://github.com/hplush/hplush.dev/edit/main/about/index.html"
+      class="edit"
+    >
+      edit
+    </a>
   </body>
 </html>
