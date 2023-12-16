@@ -101,6 +101,11 @@ h1 {
   margin-bottom: 1rem;
   padding-left: 1.4em;
   position: relative;
+
+  & > a {
+    margin-left: -0.7em;
+    font-weight: 800;
+  }
 }
 
 strong {
