@@ -64,18 +64,18 @@ main {
   margin: 0 auto;
 }
 
-.intro {
-  max-width: 40rem;
+.home {
+  max-width: 31rem;
 }
 
 .logo {
   float: right;
-  width: 80px;
-  height: 101px;
+  width: 48px;
+  height: 60px;
   background-color: var(--text);
   mask-image: url(./logo.svg);
   mask-size: contain;
-  margin-top: 0.4rem;
+  margin: -1.1rem 0 0 0;
 }
 
 img {
