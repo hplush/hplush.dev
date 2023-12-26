@@ -29,6 +29,6 @@ For every project, we need to create a **document with all security risks** and 
 
 * **Monetization model** or plans for it in early stages should be open and documented. The security risks document from “Protect users from ourselves” is a good place for it.
 * We should keep **discussions about the project open**. If it is impossible, we should explain the reasons behind our discussions.
-* All code should by **open-source by default**. We should have good reasons if we need to close any component.
+* All code should be **open-source by default**. We should have good reasons if we need to close any component.
 * We should **document all protocols** used in an application.
 * **We are making mistakes.** We should not fear uncomfortable questions and even promote discussions about our problems. On the other hand, we should not blame anyone from the team for mistakes.
