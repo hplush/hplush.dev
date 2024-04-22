@@ -3,42 +3,58 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  id-token: write
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    name: Staging Deploy
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: hplushdev
+      REGION: europe-west1
     steps:
-      - name: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Download web assets from test step
+        uses: actions/download-artifact@v4
         with:
-          version: 8
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Install build dependencies
-        run: pnpm install --frozen-lockfile --production
-      - name: Compile Markdown
-        run: pnpm build
-      - name: Check files changes
-        id: hash
-        run: npx ssdeploy changed
-        env:
-          WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+          name: web-client-assets-${{ github.sha }}
+          path: web/
       - name: Auth Google Cloud
-        if: "!steps.hash.outputs.noChanges"
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCLOUD_AUTH }}
+          workload_identity_provider: projects/826277084000/locations/global/workloadIdentityPools/github/providers/slowreader
+          service_account: github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
       - name: Install Google Cloud
-        if: "!steps.hash.outputs.noChanges"
-        uses: google-github-actions/setup-gcloud@v1
-      - name: Deploy files
-        if: "!steps.hash.outputs.noChanges"
-        run: npx ssdeploy deploy --verbose
-        env:
-          GCLOUD_APP: ${{ secrets.GCLOUD_APP }}
-          GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
+        uses: google-github-actions/setup-gcloud@v2
+      - name: Auth Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+      - name: Build Docker image
+        run: docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/staging/staging:latest ./web
+      - name: Push Docker image
+        run: docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/staging/staging:latest
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy staging \
+            --project ${{ env.PROJECT_ID }} \
+            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/staging/staging:latest \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --service-account github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+      - name: Move traffic to new revision
+        run: |
+          gcloud run services update-traffic staging \
+            --project ${{ env.PROJECT_ID }} \
+            --region ${{ env.REGION }} \
+            --to-latest
+      - name: Delete previous images
+        run: |
+          untagged=$(gcloud artifacts docker images list $REGION-docker.pkg.dev/$PROJECT_ID/staging/staging --include-tags --format="get(version)" --filter="tags = ''")
+          for digest in $untagged; do
+            image=$REGION-docker.pkg.dev/$PROJECT_ID/staging/staging@$digest
+            echo "Deleting unused image: $image"
+            gcloud artifacts docker images delete $image --quiet
+          done

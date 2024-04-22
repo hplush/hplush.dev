@@ -39,4 +39,4 @@ let html = `<!DOCTYPE html>
   </body>
 </html>`
 
-writeFileSync(`dist/${name}.html`, html, 'utf8')
+writeFileSync(`content/${name}.html`, html, 'utf8')
