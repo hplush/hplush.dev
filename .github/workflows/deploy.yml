@@ -7,8 +7,9 @@ permissions:
   contents: read
   id-token: write
 env:
-  PROJECT_ID: hplushdev
+  PROJECT_ID: hplushdev-421120
   REGION: europe-west1
+  IDENTITY: 878858292866
 jobs:
   deploy:
     name: Deploy
@@ -32,7 +33,7 @@ jobs:
       - name: Auth Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/826277084000/locations/global/workloadIdentityPools/github/providers/slowreader
+          workload_identity_provider: projects/{{ env.IDENTITY }}/locations/global/workloadIdentityPools/github/providers/slowreader
           service_account: github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
       - name: Install Google Cloud
         uses: google-github-actions/setup-gcloud@v2
