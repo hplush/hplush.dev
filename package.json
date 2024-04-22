@@ -6,7 +6,7 @@
   },
   "type": "module",
   "license": "MIT",
-  "repository": "hplush/hplu.sh",
+  "repository": "hplush/hplush.dev",
   "dependencies": {
     "marked": "^11.1.0",
     "ssdeploy": "^0.9.3"
