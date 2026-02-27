@@ -6,10 +6,7 @@ on:
 permissions:
   contents: read
   id-token: write
-env:
-  PROJECT_ID: hplushdev-421120
-  REGION: europe-west1
-  IDENTITY: 878858292866
+  packages: write
 jobs:
   deploy:
     name: Deploy
@@ -30,38 +27,23 @@ jobs:
         run: pnpm install --production
       - name: Compile Markdown
         run: pnpm build
-      - name: Auth Google Cloud
-        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
-        with:
-          workload_identity_provider: projects/${{ env.IDENTITY }}/locations/global/workloadIdentityPools/github/providers/hplush
-          service_account: github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
-      - name: Install Google Cloud
-        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3.0.1
-      - name: Auth Docker
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
       - name: Build Docker image
-        run: docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/website/website:latest .
+        run: docker build -t ghcr.io/hplush/hplush.dev:latest .
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Docker image
-        run: docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/website/website:latest
-      - name: Deploy to Cloud Run
+        run: docker push ghcr.io/hplush/hplush.dev:latest
+      - name: Trigger Dokploy Deployment
         run: |
-          gcloud run deploy website \
-            --project ${{ env.PROJECT_ID }} \
-            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/website/website:latest \
-            --region ${{ env.REGION }} \
-            --allow-unauthenticated \
-            --service-account github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
-      - name: Move traffic to new revision
-        run: |
-          gcloud run services update-traffic website \
-            --project ${{ env.PROJECT_ID }} \
-            --region ${{ env.REGION }} \
-            --to-latest
-      - name: Delete previous images
-        run: |
-          untagged=$(gcloud artifacts docker images list $REGION-docker.pkg.dev/$PROJECT_ID/website/website --include-tags --format="get(version)" --filter="tags = ''")
-          for digest in $untagged; do
-            image=$REGION-docker.pkg.dev/$PROJECT_ID/website/website@$digest
-            echo "Deleting unused image: $image"
-            gcloud artifacts docker images delete $image --quiet
-          done
+          curl -X 'POST' \
+          'https://cloud.hplush.dev/api/application.deploy' \
+          -H 'accept: application/json' \
+          -H 'x-api-key: ${{ env.DOKPLOY_TOKEN }}' \
+          -H 'Content-Type: application/json' \
+          -d '{
+                "applicationId": "hplushdev-web-8ph1sl"
+          }'
