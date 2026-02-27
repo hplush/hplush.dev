@@ -8,9 +8,9 @@
   "license": "MIT",
   "repository": "hplush/hplush.dev",
   "dependencies": {
-    "marked": "^11.1.0"
+    "marked": "^17.0.3"
   },
   "devDependencies": {
-    "serve": "^14.2.1"
+    "serve": "^14.2.5"
   }
 }
