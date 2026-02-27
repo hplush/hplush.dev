@@ -41,14 +41,7 @@ jobs:
         run: docker push ghcr.io/hplush/hplush.dev:latest
       - name: Trigger Dokploy Deployment
         run: |
-          curl --fail -X 'POST' \
-          'https://cloud.hplush.dev/api/application.deploy' \
-          -H 'Accept: application/json' \
-          -H 'X-API-Key: ${{ secrets.DOKPLOY_TOKEN }}' \
-          -H 'Content-Type: application/json' \
-          -d '{
-            "applicationId": "hplushdev-web-8ph1sl"
-          }'
+          curl --fail ${{ secrets.DOKPLOY_DEPLOY_URL }}
       - name: Clean previous images
         uses: dataaxiom/ghcr-cleanup-action@cd0cdb900b5dbf3a6f2cc869f0dbb0b8211f50c4 # v1.0.16
         with:
