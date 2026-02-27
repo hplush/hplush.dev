@@ -39,7 +39,7 @@ jobs:
         run: docker push ghcr.io/hplush/hplush.dev:latest
       - name: Trigger Dokploy Deployment
         run: |
-          curl -X 'POST' \
+          curl --fail -X 'POST' \
           'https://cloud.hplush.dev/api/application.deploy' \
           -H 'Accept: application/json' \
           -H 'X-API-Key: ${{ secrets.DOKPLOY_TOKEN }}' \
