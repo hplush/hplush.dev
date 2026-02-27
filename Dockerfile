@@ -4,4 +4,4 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./content/ /var/www/
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-  CMD ["/usr/bin/hc", "http://localhost:8080/"]
+  CMD ["/bin/httpcheck", "http://localhost:8080/"]
