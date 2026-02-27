@@ -41,9 +41,16 @@ jobs:
         run: |
           curl -X 'POST' \
           'https://cloud.hplush.dev/api/application.deploy' \
-          -H 'accept: application/json' \
-          -H 'x-api-key: ${{ env.DOKPLOY_TOKEN }}' \
+          -H 'Accept: application/json' \
+          -H 'X-API-Key: ${{ secrets.DOKPLOY_TOKEN }}' \
           -H 'Content-Type: application/json' \
           -d '{
-                "applicationId": "hplushdev-web-8ph1sl"
+            "applicationId": "hplushdev-web-8ph1sl"
           }'
+      - name: Clean previous images
+        uses: dataaxiom/ghcr-cleanup-action@cd0cdb900b5dbf3a6f2cc869f0dbb0b8211f50c4 # v1.0.16
+        with:
+          package: hplush.dev
+          owner: hplush
+          delete-untagged: true
+          token: ${{ secrets.GITHUB_TOKEN }}
