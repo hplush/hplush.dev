@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "start": "serve content/",
-    "build": "node ./scripts/compile-md.js principles.md"
+    "build": "node ./scripts/compile-md.js principles.md",
+    "test": "pnpm build"
   },
   "type": "module",
   "license": "MIT",
