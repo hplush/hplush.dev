@@ -71,7 +71,7 @@ main {
 .logo {
   float: right;
   width: 48px;
-  height: 60px;
+  height: 48px;
   background-color: var(--text);
   mask-image: url(./logo.svg);
   mask-size: contain;
